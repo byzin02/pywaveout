@@ -1,0 +1,47 @@
+[build-system]
+requires = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pywaveout"
+version = "1.0.3"
+description = "A simple Python wrapper for the Windows waveOut API using ctypes."
+readme = "README.md"
+authors = [
+    { name = "Byzin02" }
+]
+license = { file = "LICENSE" }
+
+requires-python = ">=3.8"
+
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: Microsoft :: Windows",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Multimedia :: Sound/Audio"
+]
+
+keywords = [
+    "windows",
+    "waveout",
+    "audio",
+    "winmm",
+    "ctypes"
+]
+
+dependencies = []
+
+[project.urls]
+Repository = "https://github.com/byzin02/Py-waveOut"
+
+[tool.setuptools.packages.find]
+include = ["pywaveout*"]
