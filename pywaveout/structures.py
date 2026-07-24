@@ -2,10 +2,10 @@ import ctypes
 from ctypes import wintypes
 
 MMRESULT = wintypes.UINT
-DWORD_PTR = ctypes.c_ulonglong if ctypes.sizeof(ctypes.c_void_p) == 8 else ctypes.c_ulong
+DWORD_PTR = (
+    ctypes.c_ulonglong if ctypes.sizeof(ctypes.c_void_p) == 8 else ctypes.c_ulong
+)
 
-# A API pública usa HWAVEOUT como objeto Python, então o "LPHWAVEOUT"
-# interno continua sendo ponteiro para HANDLE da winmm.
 HWAVEOUT_HANDLE = wintypes.HANDLE
 LPHWAVEOUT = ctypes.POINTER(HWAVEOUT_HANDLE)
 
@@ -23,6 +23,16 @@ class _WAVEFORMATEX(ctypes.Structure):
 
 
 class WAVEFORMATEX:
+    __slots__ = ("_struct",)
+
+    wFormatTag: wintypes.WORD
+    nChannels: wintypes.WORD
+    nSamplesPerSec: wintypes.DWORD
+    nAvgBytesPerSec: wintypes.DWORD
+    nBlockAlign: wintypes.WORD
+    wBitsPerSample: wintypes.WORD
+    cbSize: wintypes.WORD
+
     def __init__(
         self,
         wFormatTag=0,
@@ -71,6 +81,21 @@ class _WAVEHDR(ctypes.Structure):
 
 
 class WAVEHDR:
+    __slots__ = (
+        "_struct",
+        "_buffer",
+        "_c_buffer",
+    )
+
+    lpData: bytes | bytearray | memoryview
+    dwBufferLength: wintypes.DWORD
+    dwBytesRecorded: wintypes.DWORD
+    dwUser: DWORD_PTR
+    dwFlags: wintypes.DWORD
+    dwLoops: wintypes.DWORD
+    lpNext: ctypes.c_void_p
+    reserved: DWORD_PTR
+
     def __init__(self):
         object.__setattr__(self, "_struct", _WAVEHDR())
         object.__setattr__(self, "_buffer", None)
@@ -82,12 +107,17 @@ class WAVEHDR:
 
     @lpData.setter
     def lpData(self, value):
-        # Aceita bytearray / memoryview mutável / bytes (copiando para bytearray)
         if isinstance(value, bytes):
             value = bytearray(value)
         elif isinstance(value, memoryview):
             if value.readonly or not value.contiguous:
                 value = bytearray(value.tobytes())
+
+        if value is None:
+            object.__setattr__(self, "_buffer", None)
+            object.__setattr__(self, "_c_buffer", None)
+            self._struct.lpData = None
+            return
 
         object.__setattr__(self, "_buffer", value)
 
@@ -125,6 +155,17 @@ class _WAVEOUTCAPSW(ctypes.Structure):
 
 
 class WAVEOUTCAPSW:
+    __slots__ = ("_struct",)
+
+    wMid: wintypes.WORD
+    wPid: wintypes.WORD
+    vDriverVersion: wintypes.DWORD
+    szPname: str
+    dwFormats: wintypes.DWORD
+    wChannels: wintypes.WORD
+    wReserved1: wintypes.WORD
+    dwSupport: wintypes.DWORD
+
     def __init__(self):
         object.__setattr__(self, "_struct", _WAVEOUTCAPSW())
 
@@ -158,6 +199,11 @@ class _MMTIME(ctypes.Structure):
 
 
 class MMTIME:
+    __slots__ = ("_struct",)
+
+    wType: wintypes.UINT
+    u: _MMTIME_UNION
+
     def __init__(self):
         object.__setattr__(self, "_struct", _MMTIME())
 
@@ -172,6 +218,10 @@ class MMTIME:
 
 
 class HWAVEOUT:
+    __slots__ = ("value",)
+
+    value: HWAVEOUT_HANDLE
+
     def __init__(self, value=0):
         if isinstance(value, HWAVEOUT_HANDLE):
             handle = value

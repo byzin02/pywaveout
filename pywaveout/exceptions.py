@@ -1,5 +1,3 @@
-# pywaveout/exceptions.py
-
 class PyWaveOutError(Exception):
     pass
 
