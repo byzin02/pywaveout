@@ -5,6 +5,6 @@ A simple Python wrapper for the Windows **WaveOut** audio API. This project uses
 It allows you to work directly with the Windows sound card in a manner similar to C or C++, but with the advantages of automatic memory management and Python's native exception handling
 
 ## Installation
-bash ```
+``` bash
 pip install pywaveout
 ```
