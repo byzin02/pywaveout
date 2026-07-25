@@ -1,4 +1,4 @@
-# PyWaveout V1.0.4
+# PyWaveout V1.0.5
 
 A simple Python wrapper for the Windows **WaveOut** audio API. This project uses the `ctypes` library to interface with `winmm.dll`.
 
