@@ -41,7 +41,7 @@ keywords = [
 dependencies = []
 
 [project.urls]
-Repository = "github.com/byzin02/pywaveout.git"
+Repository = "github.com/byzin02/pywaveout/"
 
 [tool.setuptools.packages.find]
 include = ["pywaveout*"]
