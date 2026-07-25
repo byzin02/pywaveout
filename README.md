@@ -6,5 +6,5 @@ It allows you to work directly with the Windows sound card in a manner similar t
 
 ## Installation
 ```
-pip install git+https://github.com/byzin02/pywaveout.git
+pip install pywaveout
 ```
