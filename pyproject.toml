@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pywaveout"
-version = "1.0.3"
+version = "1.0.4"
 description = "A simple Python wrapper for the Windows waveOut API using ctypes."
 readme = "README.md"
 authors = [
@@ -41,7 +41,7 @@ keywords = [
 dependencies = []
 
 [project.urls]
-Repository = "https://github.com/byzin02/Py-waveOut"
+Repository = "github.com/byzin02/pywaveout.git"
 
 [tool.setuptools.packages.find]
 include = ["pywaveout*"]
